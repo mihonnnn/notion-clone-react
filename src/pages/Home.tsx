@@ -13,7 +13,6 @@ export default function Home() {
     const newNote = await noteRepository.create(currentUser!.id, { title });
     noteStore.set([newNote]);
     setTitle("");
-    console.log(newNote);
   };
 
   return (
