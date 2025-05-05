@@ -3,12 +3,14 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@/components/ui/dropdown-menu';
-import { FileIcon, MoreHorizontal, Plus, Trash } from 'lucide-react';
-import { Item } from '../SideBar/Item';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/dropdown-menu";
+import { FileIcon, MoreHorizontal, Plus, Trash } from "lucide-react";
+import { Item } from "../SideBar/Item";
+import { cn } from "@/lib/utils";
+import { Note } from "@/modules/notes/note.entity";
 
 interface Props {
+  note: Note;
   expanded?: boolean;
   layer?: number;
   isSelected?: boolean;
@@ -19,6 +21,7 @@ interface Props {
 }
 
 export function NoteItem({
+  note,
   onClick,
   layer = 0,
   expanded = false,
@@ -28,13 +31,12 @@ export function NoteItem({
   onExpand,
 }: Props) {
   const menu = (
-    <div className={cn('ml-auto flex items-center gap-x-2')}>
+    <div className={cn("ml-auto flex items-center gap-x-2")}>
       <DropdownMenu>
         <DropdownMenuTrigger onClick={(e) => e.stopPropagation()}>
           <div
             className="h-full ml-auto rounded-sm hover:bg-neutral-300"
-            role="button"
-          >
+            role="button">
             <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
           </div>
         </DropdownMenuTrigger>
@@ -42,8 +44,7 @@ export function NoteItem({
           className="w-60"
           align="start"
           side="right"
-          forceMount
-        >
+          forceMount>
           <DropdownMenuItem onClick={onDelete}>
             <Trash className="w-4 h-4 mr-2" />
             Delete
@@ -53,8 +54,7 @@ export function NoteItem({
       <div
         className="h-full ml-auto rounded-sm hover:bg-neutral-300"
         role="button"
-        onClick={onCreate}
-      >
+        onClick={onCreate}>
         <Plus className="w-4 h-4 text-muted-foreground" />
       </div>
     </div>
@@ -64,10 +64,9 @@ export function NoteItem({
     <div
       onClick={onClick}
       role="button"
-      style={{ paddingLeft: layer != null ? `${layer * 12 + 12}px` : '12px' }}
-    >
+      style={{ paddingLeft: layer != null ? `${layer * 12 + 12}px` : "12px" }}>
       <Item
-        label={'test'}
+        label={note.title ?? "無題"}
         icon={FileIcon}
         onIconClick={onExpand}
         trailingItem={menu}
